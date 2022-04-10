@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Les informations de : {{ candidat.nom }}
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Table Candidat</h4>
+                    <ul>
+                    <li>{{ candidat.id }}</li>
+                    <li>{{ candidat.nom }}</li>
+                    <li>{{ candidat.prenom }}</li>
+                    <li>{{ candidat.score  }}</li>
+                    <li>{{ candidat.motcle }}</li>
+                    <li><a href="{{ path('show_candidat',{'id': candidat.id, 'simulation' : 'true'}) }}" class="btn btn-warning">Simulation</a></li>
+                    </ul>
+            </div>
+        </div>
+    </div> 
+    {% if simulation == 'true' %}
+        {% for sujet in Sujets %}
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                <ul>
+                    <li>{{ sujet.reference }}</li>
+                    <li>{{ sujet.titre }}</li>
+                    <li>{{ sujet.description }}</li>
+                    <li>{{ sujet.nbpoints }}</li>
+                    <li><a href="{{ path('ancrer_candidat',{'idSujet': sujet.id, 'idCandidat': candidat.id})}}" class="btn btn-secondary ancrer" style="display:none">Ancrer à l'étudiant</a></li>
+                </ul>
+                </div>
+            </div>
+        </div>        
+        {% endfor %}   
+        <button class="btn btn-primary" id="association" onclick="show()">Afficher association</button>
+    {% endif %}    
+      
+</div>                 
+{% endblock %}
+
+{% block JavaScript %}
+{{ parent() }} 
+<script>
+function show(){
+ 
+   $(".ancrer").show();
+   $("#association").hide();
+
+
+}
+</script>
+{% endblock %}

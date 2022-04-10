@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+{{ form_start(formSujet) }}
+{{ form_widget(formSujet) }}
+<br>
+<input type="submit" class="btn btn-success">
+{{ form_end(formSujet) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" >
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Reference</th>
+                                <th class="text-center">Titre</th>
+                                <th class="text-center">Description</th>
+                                <th class="text-center">Nombres de points</th>
+                                <th class="text-center">Supprimer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sujet in Sujets %}
+                            <tr>
+                                <td class="text-center">{{ sujet.id }}</td>
+                                <td class="text-center">{{ sujet.reference }}</td>
+                                <td class="text-center">{{ sujet.titre }}</td>
+                                <td class="text-center">{{ sujet.description }}</td>
+                                <td class="text-center">{{ sujet.nbpoints }}</td>
+                                <td class="text-center"><a href="{{ path('sup_sujet',{'id': sujet.id }) }}" class="btn btn-danger">Supprimer</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+</div>
+
+{% endblock %}

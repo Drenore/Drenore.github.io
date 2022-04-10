@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les candidats!{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Ajouter un candidat</h4>
+                <p class="card-description">
+                    Basic form layout
+                </p>
+
+{{ form_start(formCandidat) }}
+{{ form_widget(formCandidat) }}
+<br>
+<input type="submit" class="btn btn-success" value="Valider">
+{{ form_end(formCandidat) }} 
+            </div>
+        </div>
+    </div>  
+    <div class="col-md-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                <h4 class="card-title">Table Candidat</h4>
+                {{ form_start(formSearch,{'action':path('app_candidat'),'method':'POST'}) }}
+                {{ form_end(formSearch) }}
+                </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td class="text-center">ID</td>
+                                    <td class="text-center">CIN</td>
+                                    <td class="text-center">Nom</td>
+                                    <td class="text-center">Prenom</td>
+                                    <td class="text-center">Score</td>
+                                    <td class="text-center">Mot cle</td>
+                                    <td class="text-center">Sujet</td>
+                                    <td class="text-center">Action</td>
+                                    <td class="text-center">Afficher</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for candidat in Candidats %}
+                                <tr>
+                                    <td class="text-center">{{ candidat.id }}</td>
+                                    <td class="text-center">{{ candidat.cin }}</td>
+                                    <td class="text-center">{{ candidat.nom }}</td>
+                                    <td class="text-center">{{ candidat.prenom }}</td>
+                                    <td class="text-center">{{ candidat.score }}</td>
+                                    <td class="text-center">{{ candidat.motcle  }}</td>
+                                    <td class="text-center">{% if candidat.idsujet != NULL %}
+                                        {{ candidat.idsujet.titre }}</td>
+                                        {% else %}
+                                        Pas de sujet
+                                    {% endif %}
+                                    
+                                    <td class="text-center"><a href="{{ path('sup_candidat',{'id': candidat.id,  }) }}" class="btn btn-danger">Supprimer</a></td>
+                                    <td class="text-center"><a href="{{ path('show_candidat',{'id': candidat.id, 'simulation': 'false'}) }}" class="btn btn-primary">Afficher</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>          
+                </div>
+            </div>
+        </div>
+    </div>
+</div>            
+{% endblock %}
